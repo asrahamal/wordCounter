@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_REPO = 'https://github.com/asrahamal/wordCounter.git'
+        GIT_BRANCH = 'main'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+            }
+        }
+
+        stage('Install Selenium Dependencies') {
+            steps {
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Selenium Tests') {
+            steps {
+                sh 'python3 test_selenium.py'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Selenium tests completed successfully!'
+        }
+
+        failure {
+            echo 'Selenium tests failed!'
+        }
+    }
+}

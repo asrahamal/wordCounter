@@ -27,17 +27,13 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                script {
-                    sh 'docker build -t react-app .'
-                }
+                sh 'docker build -t react-app .'
             }
         }
 
         stage('Docker Compose Up') {
             steps {
-                script {
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker-compose up -d'
             }
         }
 
